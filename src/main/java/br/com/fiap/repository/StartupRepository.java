@@ -11,20 +11,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StartupRepository extends CrudRepository<Startup, Integer> {
 
-	@Query("select sc from USUADIO_STARTUP where sc.STARTUP_ID = :id")
-	public List<String> findUsersByStartup(@Param("id") String id);
-
-	@Query("select s from Startup s where s.startup_id = :id")
+	@Query(value = "select s from Startup s where s.STARTUP_ID = :id", nativeQuery = true)
 	public List<Startup> findById(@Param("id") String id);
 
-	@Query("select s from Startup s where s.NOME_FANTASIA = :nomeFantasia")
-	public List<Startup> findByName(@Param("nomeFantasia") String nome);
+	@Query(value = "select s from Startup s where s.NOME_FANTASIA = :nome_fantasia", nativeQuery = true)
+	public List<Startup> findByNomeFantasia(@Param("nome_fantasia") String nome);
 	
-	@Query("select s from Startup s where s.cpf = :cpf")
-	public List<Startup> findByDocument(@Param("cpf") String cpf);
-	
-	@Query("select s from Startup s where s.uuid = :uuid")
-	public List<Startup> findByUuid(@Param("uuid") String uuid);
+	@Query(value = "select s from Startup s where s.cnpj = :cnpj", nativeQuery = true)
+	public List<Startup> findByDocument(@Param("cnpj") String cnpj);
+
 	
 //	@Query("select e from Endereco e where e.rua = :rua")
 //	public List<Endereco> findByStreet(@Param("rua") String rua);

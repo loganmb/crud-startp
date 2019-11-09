@@ -1,9 +1,7 @@
 package br.com.fiap.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -28,6 +26,7 @@ public class StartupService {
 
     @Autowired
     private StartupRepository startupRepository;
+
 
     @Transactional
     @RequestMapping(path = "/add", method = RequestMethod.POST)
@@ -74,7 +73,7 @@ public class StartupService {
     @Transactional
     @RequestMapping(path = "/update/{id}", method = RequestMethod.PATCH)
     @ResponseBody
-    public ResponseEntity<String> updateClienteById(@RequestBody String payload,
+    public ResponseEntity<String> updateStartupById(@RequestBody String payload,
                                                     @PathVariable("id") String id) {
 
         try {
@@ -141,11 +140,11 @@ public class StartupService {
     @Transactional
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<String> deleteByCpf(@PathVariable String id) {
+    public ResponseEntity<String> deleteById(@PathVariable String id) {
 
         try {
 
-            List<Startup> startupList = startupRepository.findByDocument(id);
+            List<Startup> startupList = startupRepository.findById(id);
 
             startupList.forEach(startup -> {
                 startupRepository.deleteById(startup.getStartupId());
@@ -203,11 +202,11 @@ public class StartupService {
     @Transactional(readOnly = true)
     @RequestMapping(value = "/nome/{nome_fantasia}", method = RequestMethod.GET)
     @ResponseBody
-    public List<StartupJson> findByName(@PathVariable String nome_fantasia) {
+    public List<StartupJson> findByNomeFantasia(@PathVariable String nome_fantasia) {
 
         List<StartupJson> startupsJson = new ArrayList<>();
 
-        startupRepository.findByName(nome_fantasia).forEach(startup -> {
+        startupRepository.findByNomeFantasia(nome_fantasia).forEach(startup -> {
             StartupJson startupJson = new StartupJson();
             EnderecoJson enderecoJson = new EnderecoJson();
 
@@ -233,85 +232,41 @@ public class StartupService {
     }
 
 
-    @Transactional(readOnly = true)
-    @RequestMapping(value = "/cnpj/{cnpj}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<StartupJson> findByDocument(@PathVariable String cnpj) {
+//   @Transactional(readOnly = true)
+//   @RequestMapping(value = "/cnpj/{cnpj}", method = RequestMethod.GET)
+//   @ResponseBody
+//   public List<StartupJson> findByDocument(@PathVariable String cnpj) {
 
-        List<StartupJson> startupJsons = new ArrayList<>();
+//       List<StartupJson> startupJsons = new ArrayList<>();
 
 
-        startupRepository.findByDocument(cnpj).forEach(startup -> {
-            StartupJson startupJson = new StartupJson();
-            EnderecoJson enderecoJson = new EnderecoJson();
+//       startupRepository.findByDocument(cnpj).forEach(startup -> {
+//           StartupJson startupJson = new StartupJson();
+//           EnderecoJson enderecoJson = new EnderecoJson();
 
-            startupJson.setCnjp(startup.getCnjp());
-            startupJson.setDataCadastro(startup.getDataCadastro());
-            startupJson.setEmail(startup.getEmail());
-            startupJson.setNomeFantasia(startup.getNomeFantasia());
-            startupJson.setStartupId(startup.getStartupId().toString());
+//           startupJson.setCnjp(startup.getCnjp());
+//           startupJson.setDataCadastro(startup.getDataCadastro());
+//           startupJson.setEmail(startup.getEmail());
+//           startupJson.setNomeFantasia(startup.getNomeFantasia());
+//           startupJson.setStartupId(startup.getStartupId().toString());
 
-            enderecoJson.setBairro(startup.getBairro());
-            enderecoJson.setCep(startup.getCep());
-            enderecoJson.setCidade(startup.getCidade());
-            enderecoJson.setEstado(startup.getEstado());
-            enderecoJson.setNumero(startup.getNumero());
-            enderecoJson.setPais(startup.getPais());
-            enderecoJson.setRua(startup.getRua());
-            startupJson.setEndereco(enderecoJson);
+//           enderecoJson.setBairro(startup.getBairro());
+//           enderecoJson.setCep(startup.getCep());
+//           enderecoJson.setCidade(startup.getCidade());
+//           enderecoJson.setEstado(startup.getEstado());
+//           enderecoJson.setNumero(startup.getNumero());
+//           enderecoJson.setPais(startup.getPais());
+//           enderecoJson.setRua(startup.getRua());
+//           startupJson.setEndereco(enderecoJson);
 
-            startupJsons.add(startupJson);
-        });
+//           startupJsons.add(startupJson);
+//       });
 
-        return startupJsons;
-    }
+//       return startupJsons;
+//   }
 
-    @Transactional(readOnly = true)
-    @GetMapping(value = "/{id}/usuarios")
-    @ResponseBody
-    public List<String> findUsersByStartup(@PathVariable String id) {
 
-        List<String> uuids = startupRepository.findUsersByStartup(id);
 
-        return uuids;
-    }
 
-    @Transactional(readOnly = true)
-    @PostMapping(value = "/{id}/usuarios/add")
-    @ResponseBody
-    public ResponseEntity addUserOnStartup(@PathVariable String id, @RequestBody String body) {
-
-		try {
-
-			ObjectMapper mapper = new ObjectMapper();
-			String uuid = mapper.convertValue(body, String.class);
-			Startup startup = new Startup();
-
-			Set<String> uuids = new HashSet<>();
-
-			uuids.add(uuid);
-
-			startup.setUuids(uuids);
-
-			startup.setStartupId(Integer.parseInt(id));
-			startup.setUsuarios(startupJson.getUsuarios());
-
-			startupRepository.save(startup);
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-			String responseBody = "{\"Mensagem\":\"Cliente adicionado com sucesso\"}";
-
-			return new ResponseEntity<>(responseBody, headers, HttpStatus.CREATED);
-
-		} catch (Exception e) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-			String responseBody = "{\"Mensagem\":\"Ocorreu um erro\", \"Exceção\":" + e.getMessage() + "}";
-
-			return new ResponseEntity<>(responseBody, headers, HttpStatus.BAD_REQUEST);
-		}
-
-    }
 
 }

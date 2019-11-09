@@ -4,8 +4,6 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class StartupJson {
 
 	@JsonProperty("startup_id")
@@ -30,16 +28,6 @@ public class StartupJson {
 	@JsonProperty("endereco")
 	private EnderecoJson endereco;
 
-	@JsonProperty("usuarios")
-	private List<String> usuarios;
-
-	public List<String> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<String> usuarios) {
-		this.usuarios = usuarios;
-	}
 
 	public String getStartupId() {
 		return startupId;

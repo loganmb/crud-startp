@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "USUARIO_STARTUP", uniqueConstraints = { @UniqueConstraint(columnNames = "USUARIO_STARTUP_ID") })
-public class UsuarioStartup implements Serializable {
+public class StartupUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,9 +15,11 @@ public class UsuarioStartup implements Serializable {
     private Integer usuarioStartupId;
 
     @Column(name = "UUID_USUARIO", unique = true, nullable = false)
+    @JoinColumn(table = "CLIENTE", name = "UUID")
     private String uuidUsuario;
 
     @Column(name = "STARTUP_ID", unique = true, nullable = false)
+    @JoinColumn(table = "STARTUP", name = "STARTUP_ID")
     private String idStartp;
 
     public Integer getUsuarioStartupId() {

@@ -53,21 +53,8 @@ public class Startup implements Serializable {
 	@Column(name = "PAIS")
 	private String pais;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "USUARIO_STARTUP", joinColumns = {
-			@JoinColumn(name = "STARTUP_ID", table = "STARTUP", nullable = false, updatable = false) }, inverseJoinColumns = {
-			@JoinColumn(name = "UUID", table = "CLIENTE", nullable = false, updatable = false) })
-	private Set<String> uuids = new HashSet<>();
 
-	public Set<String> getUuids() {
-		return uuids;
-	}
-
-	public void setUuids(Set<String> uuids) {
-		this.uuids = uuids;
-	}
-
-	public Integer getStartupId() {
+ 	public Integer getStartupId() {
 		return startupId;
 	}
 
