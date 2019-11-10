@@ -17,12 +17,16 @@ public class Startup implements Serializable {
 	@Column(name = "STARTUP_ID", unique = true, nullable = false)
 	private Integer startupId;
 
+	@Column(name = "UUID_FOUNDER")
+	@JoinColumn(name = "CLIENTE_ID", table = "CLIENTE")
+	private String uuidFounder;
+
 	@Column(name = "NOME_FANTASIA", unique = true, nullable = false)
 	private String nomeFantasia;
 
 	@Column(name = "RAZAO_SOCIAL", unique = true)
 	private String razaoSocial;
-	
+
 	@Column(name = "CNJP", unique = true)
 	private String cnjp;
 
@@ -60,6 +64,14 @@ public class Startup implements Serializable {
 
 	public void setStartupId(Integer startupId) {
 		this.startupId = startupId;
+	}
+
+	public String getUuidFounder() {
+		return uuidFounder;
+	}
+
+	public void setUuidFounder(String uuidFounder) {
+		this.uuidFounder = uuidFounder;
 	}
 
 	public String getRazaoSocial() {

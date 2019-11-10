@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.com.fiap.entity.StartupUsuario;
 import br.com.fiap.model.StartupJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,15 +32,16 @@ public class StartupService {
     @Transactional
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> add(@Valid @RequestBody String payload) {
+    public ResponseEntity<String> add(@Valid @RequestBody StartupJson startupJson) {
 
         try {
 
-            ObjectMapper mapper = new ObjectMapper();
-            StartupJson startupJson = mapper.convertValue(payload, StartupJson.class);
+            //ObjectMapper mapper = new ObjectMapper();
+            //StartupJson startupJson = mapper.convertValue(payload, StartupJson.class);
             Startup startup = new Startup();
 
             startup.setNomeFantasia(startupJson.getNomeFantasia());
+            startup.setUuidFounder(startupJson.getUuidFounder());
             startup.setRazaoSocial(startupJson.getRazaoSocial());
             startup.setCnjp(startupJson.getCnjp());
             startup.setEmail(startupJson.getEmail());
@@ -56,7 +58,7 @@ public class StartupService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"Mensagem\":\"Cliente adicionado com sucesso\"}";
+            String body = "{\"Mensagem\":\"Startup adicionada com sucesso\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.CREATED);
 
@@ -123,7 +125,7 @@ public class StartupService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"Mensagem\":\"Cliente atualizado com sucesso\"}";
+            String body = "{\"Mensagem\":\"Startup atualizada com sucesso\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -152,7 +154,7 @@ public class StartupService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-            String body = "{\"Mensagem\":\"Cliente excluido com sucesso\"}";
+            String body = "{\"Mensagem\":\"Startup excluida com sucesso\"}";
 
             return new ResponseEntity<>(body, headers, HttpStatus.OK);
 
@@ -179,6 +181,7 @@ public class StartupService {
 
             startupJson.setCnjp(startup.getCnjp());
             startupJson.setDataCadastro(startup.getDataCadastro());
+            startup.setUuidFounder(startupJson.getUuidFounder());
             startupJson.setEmail(startup.getEmail());
             startupJson.setNomeFantasia(startup.getNomeFantasia());
             startupJson.setStartupId(startup.getStartupId().toString());
@@ -211,6 +214,7 @@ public class StartupService {
             EnderecoJson enderecoJson = new EnderecoJson();
 
             startupJson.setCnjp(startup.getCnjp());
+            startup.setUuidFounder(startupJson.getUuidFounder());
             startupJson.setDataCadastro(startup.getDataCadastro());
             startupJson.setEmail(startup.getEmail());
             startupJson.setNomeFantasia(startup.getNomeFantasia());

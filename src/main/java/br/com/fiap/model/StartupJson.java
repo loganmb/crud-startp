@@ -9,6 +9,9 @@ public class StartupJson {
 	@JsonProperty("startup_id")
 	private String startupId;
 
+	@JsonProperty("uuid_founder")
+	private String uuidFounder;
+
 	@JsonProperty("nome_fantasia")
 	@NotNull
 	private String nomeFantasia;
@@ -35,6 +38,14 @@ public class StartupJson {
 
 	public void setStartupId(String startupId) {
 		this.startupId = startupId;
+	}
+
+	public String getUuidFounder() {
+		return uuidFounder;
+	}
+
+	public void setUuidFounder(String uuidFounder) {
+		this.uuidFounder = uuidFounder;
 	}
 
 	public String getNomeFantasia() {
