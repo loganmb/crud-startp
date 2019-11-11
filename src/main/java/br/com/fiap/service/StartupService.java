@@ -5,19 +5,23 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import br.com.fiap.entity.StartupUsuario;
-import br.com.fiap.model.StartupJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.fiap.entity.Startup;
+import br.com.fiap.model.StartupJson;
 import br.com.fiap.model.EnderecoJson;
 import br.com.fiap.repository.StartupRepository;
 
@@ -27,7 +31,6 @@ public class StartupService {
 
     @Autowired
     private StartupRepository startupRepository;
-
 
     @Transactional
     @RequestMapping(path = "/add", method = RequestMethod.POST)
@@ -181,8 +184,9 @@ public class StartupService {
 
             startupJson.setCnjp(startup.getCnjp());
             startupJson.setDataCadastro(startup.getDataCadastro());
-            startup.setUuidFounder(startupJson.getUuidFounder());
+            startupJson.setUuidFounder(startup.getUuidFounder());
             startupJson.setEmail(startup.getEmail());
+            startupJson.setRazaoSocial(startup.getRazaoSocial());
             startupJson.setNomeFantasia(startup.getNomeFantasia());
             startupJson.setStartupId(startup.getStartupId().toString());
 

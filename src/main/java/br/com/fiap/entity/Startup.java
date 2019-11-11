@@ -1,10 +1,14 @@
 package br.com.fiap.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "STARTUP", uniqueConstraints = { @UniqueConstraint(columnNames = "STARTUP_ID") })
@@ -18,7 +22,7 @@ public class Startup implements Serializable {
 	private Integer startupId;
 
 	@Column(name = "UUID_FOUNDER")
-	@JoinColumn(name = "CLIENTE_ID", table = "CLIENTE")
+	//@JoinColumn(name = "CLIENTE_ID", table = "CLIENTE")
 	private String uuidFounder;
 
 	@Column(name = "NOME_FANTASIA", unique = true, nullable = false)

@@ -2,24 +2,27 @@ package br.com.fiap.repository;
 
 import java.util.List;
 
-import br.com.fiap.entity.Startup;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.fiap.entity.Startup;
+
 @Repository
 public interface StartupRepository extends CrudRepository<Startup, Integer> {
 
-	@Query(value = "select s from Startup s where s.STARTUP_ID = :id", nativeQuery = true)
+	@Query("select s from Startup s where s.startup_id = :id")
 	public List<Startup> findById(@Param("id") String id);
 
-	@Query(value = "select s from Startup s where s.NOME_FANTASIA = :nome_fantasia", nativeQuery = true)
+	@Query("select s from Startup s where s.nome_fantasia = :nome_fantasia")
 	public List<Startup> findByNomeFantasia(@Param("nome_fantasia") String nome);
 	
-	@Query(value = "select s from Startup s where s.cnpj = :cnpj", nativeQuery = true)
+	@Query("select s from Startup s where s.cnpj = :cnpj")
 	public List<Startup> findByDocument(@Param("cnpj") String cnpj);
 
+	//@Query(value = "delete from Startup s where s.STARTUP_ID = :id", nativeQuery = true)
+	//public ResultSet deleteById(@Param("id") String id);
 	
 //	@Query("select e from Endereco e where e.rua = :rua")
 //	public List<Endereco> findByStreet(@Param("rua") String rua);
