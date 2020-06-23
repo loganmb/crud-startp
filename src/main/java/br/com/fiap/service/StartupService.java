@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import br.com.fiap.entity.Startup;
 import br.com.fiap.model.StartupJson;
 import br.com.fiap.model.EnderecoJson;
@@ -213,7 +214,7 @@ public class StartupService {
 
         List<StartupJson> startupsJson = new ArrayList<>();
 
-        startupRepository.findByNomeFantasia(nome_fantasia).forEach(startup -> {
+        startupRepository.findByNomeStartups(nome_fantasia).forEach(startup -> {
             StartupJson startupJson = new StartupJson();
             EnderecoJson enderecoJson = new EnderecoJson();
 
