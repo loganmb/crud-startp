@@ -16,7 +16,7 @@ public interface StartupRepository extends CrudRepository<Startup, Integer> {
     @Query("select s from Startup s where s.id = :id")
     public List<Startup> findById(@Param("id") String id);
 
-    @Query("select s from Startup s where s.nome = :nomeFantasia")
+    @Query(value = "select s from Startup s where s.nome = :nomeFantasia", nativeQuery = true)
     public List<Startup> findByNomeStartups(@Param("nomeFantasia") String nomeFantasia);
 
 //	@Query("select s from Startup s where s.cnpj = :cnpj")
